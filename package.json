@@ -1,0 +1,26 @@
+{
+  "name": "syamei2",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Yoshikatsu-Koyanagi/USS_syamei.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Yoshikatsu-Koyanagi/USS_syamei/issues"
+  },
+  "homepage": "https://github.com/Yoshikatsu-Koyanagi/USS_syamei#readme",
+  "devDependencies": {
+    "eslint": "^8.16.0",
+    "eslint-config-standard": "^17.0.0",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-n": "^15.2.1",
+    "eslint-plugin-promise": "^6.0.0"
+  }
+}

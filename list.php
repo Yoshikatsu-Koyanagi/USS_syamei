@@ -1123,7 +1123,7 @@
         width: 300px;
         height: 150px;
         text-align: center;
-        background-color: #cbcbcb;
+        background-color: #e9e9e9;
         border: solid 5px;
         border-color: white;
         border-radius: 15px;

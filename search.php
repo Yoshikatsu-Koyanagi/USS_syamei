@@ -6,18 +6,15 @@
     <title>車名検索</title>
 </head>
 <?php
+/*
     require("./func.php");
     ini_set( 'display_errors', 1 );
     ini_set( 'error_reporting', E_ALL );
     $con = connectDB();
-
     $spno = $_GET["spno"];
+*/
 ?>
 <body>
-    <?php 
-        //echo("<img id='spnhyou_origin' src='./spnhyou/S{$spno}.jpg'>");
-    ?>
-
     <h3>USS車名検索</h3>
     <div id="main">
         <div id="main_left">
@@ -62,98 +59,223 @@
             </div>
             <div class="wrapper_form">
                 <form id="form_search" onsubmit="return false;" autocomplete="off">
+<!--
                     <div id="wrapper_inputs_top">
                         <div id="wrapper_input_katas">
                             <span>型式(F1)</span><input type="tel" id="katas" name="katas" oninput="search();" autofocus>
                         </div>
-                        <div id="wrapper_katas_match">
-                            <input type="checkbox" id="katas_match" name="katas_match" onchange="search();"/>
-                            <label class="check" for="katas_match"><div></div></label>
-
-<!--
-                            <select id="aaaaaa" name="aaaaaaaaaaaa">
-                                <option value=""></option>
-                                <option value="">aaa</option>
-                                <option value="">aaa</option>
+                        <div class="wrapper_match">
+                            <select id="katas_match" class="select_match" name="katas_match" onchange="search(); getMatchChange('katas_match');">
+                                <option value="0">前方一致</option>
+                                <option value="1">後方一致</option>
+                                <option value="2">部分一致</option>
+                                <option value="3">完全一致</option>
+                                <option value="4">含まない</option>
                             </select>
+                        </div>
+                        <div class="wrapper_input_question">
+                            <label><input type="checkbox" id="question" name="question"><span>？</span></label>
+                        </div>
+                    </div>
 -->
-                        </div>
-                        <div id="wrapper_input_question">
-                            <span>？(F11)</span><input type="checkbox" id="question" name="question">
-                        </div>
-                    </div>  
-                    <div id="wrapper_inputs_bottom">
+                    <div id="wrapper_inputs">
                         <div>
                             <div>
-                                <span>排気量(F2)</span><input type="tel" id="cc" name="cc" class="input_search" oninput="search();">
+                                <span class="span_name">型式(F1)</span><input type="tel" id="katas" name="katas" oninput="search();" autofocus>
+                                <div class="wrapper_match">
+                                    <select id="katas_match" class="select_match" name="katas_match" onchange="search(); getMatchChange('katas_match');">
+                                        <option value="0">前方一致</option>
+                                        <option value="1">後方一致</option>
+                                        <option value="2">部分一致</option>
+                                        <option value="3">完全一致</option>
+                                        <option value="4">含まない</option>
+                                    </select>
+                                </div>
+                                <div class="wrapper_input_question">
+                                    <label><input class="question" type="checkbox" id="katas_question" name="katas_question"><span>？</span></label>
+                                </div>
                             </div>
-                        
                             <div>
-                                <span>車名(F3)</span><input type="text" id="syamei" name="syamei" class="input_search" oninput="search();">
+                                <span class="span_name">排気量(F2)</span><input type="tel" id="cc" name="cc" class="input_search" oninput="search();">
+                                <div class="wrapper_match">
+                                    <select id="cc_match" class="select_match" name="cc_match" onchange="search(); getMatchChange('cc_match');">
+                                        <option value="0">前方一致</option>
+                                        <option value="1">後方一致</option>
+                                        <option value="2">部分一致</option>
+                                        <option value="3">完全一致</option>
+                                        <option value="4">含まない</option>
+                                    </select>
+                                </div>
+                                <div class="wrapper_input_question">
+                                    <label><input type="checkbox" id="cc_question" name="cc_question"><span>？</span></label>
+                                </div>
                             </div>
-                            <div>
-                                <span>正式車名(F4)</span><input type="text" id="syames" name="syames" oninput="search();">
-                            </div>
-<!--
-                            <div>
-                                <span>車種</span><input type="text" id="syasyu" name="syasyu" oninput="search();">
-                            </div>
--->
                         </div>
                         <div>
                             <div>
-                                <span>グレード(F5)</span><input type="text" id="grade" name="grade" oninput="search();">
+                                <span class="span_name">車名(F3)</span><input type="text" id="syamei" name="syamei" class="input_search" oninput="search();">
+                                <div class="wrapper_match">
+                                    <select id="syamei_match" class="select_match" name="syamei_match" onchange="search(); getMatchChange('syamei_match');">
+                                        <option value="0">前方一致</option>
+                                        <option value="1">後方一致</option>
+                                        <option value="2">部分一致</option>
+                                        <option value="3">完全一致</option>
+                                        <option value="4">含まない</option>
+                                    </select>
+                                </div>
+                                <div class="wrapper_input_question">
+                                    <label><input type="checkbox" id="syamei_question" name="syamei_question"><span>？</span></label>
+                                </div>
                             </div>
-                        
                             <div>
-                                <span>正式グレード(F6)</span><input type="text" id="grades" name="grades" oninput="search();">
+                                <span class="span_name">正式車名(F4)</span><input type="text" id="syames" name="syames" oninput="search();">
+                                <div class="wrapper_match">
+                                    <select id="syames_match" class="select_match" name="syames_match" onchange="search(); getMatchChange('syames_match');">
+                                        <option value="0">前方一致</option>
+                                        <option value="1">後方一致</option>
+                                        <option value="2">部分一致</option>
+                                        <option value="3">完全一致</option>
+                                        <option value="4">含まない</option>
+                                    </select>
+                                </div>
+                                <div class="wrapper_input_question">
+                                    <label><input type="checkbox" id="syames_question" name="syames_question"><span>？</span></label>
+                                </div>
                             </div>
-                            <div>
-                                <span>車名コード(F7)</span><input type="text" id="syancd" name="syancd" oninput="search();">
-                            </div>
-<!--
-                            <div>
-                                <span>ドア</span><input type="text" id="door" name="door" oninput="search();">
-                            </div>
--->
                         </div>
                         <div>
                             <div>
-                                <span>自税区分(F8)</span><input type="text" id="zeikbn" name="zeikbn" oninput="search();">
+                                <span class="span_name">グレード(F5)</span><input type="text" id="grade" name="grade" oninput="search();">
+                                <div class="wrapper_match">
+                                    <select id="grade_match" class="select_match" name="grade_match" onchange="search(); getMatchChange('grade_match');">
+                                        <option value="0">前方一致</option>
+                                        <option value="1">後方一致</option>
+                                        <option value="2">部分一致</option>
+                                        <option value="3">完全一致</option>
+                                        <option value="4">含まない</option>
+                                    </select>
+                                </div>
+                                <div class="wrapper_input_question">
+                                    <label><input type="checkbox" id="grade_question" name="grade_question"><span>？</span></label>
+                                </div>
                             </div>
                             <div>
-                                <span>備考(F9)</span><input type="text" id="biko" name="biko" oninput="search();">
+                                <span class="span_name">正式グレード(F6)</span><input type="text" id="grades" name="grades" oninput="search();">
+                                <div class="wrapper_match">
+                                    <select id="grades_match" class="select_match" name="grades_match" onchange="search(); getMatchChange('grades_match');">
+                                        <option value="0">前方一致</option>
+                                        <option value="1">後方一致</option>
+                                        <option value="2">部分一致</option>
+                                        <option value="3">完全一致</option>
+                                        <option value="4">含まない</option>
+                                    </select>
+                                </div>
+                                <div class="wrapper_input_question">
+                                    <label><input type="checkbox" id="grades_question" name="grades_question"><span>？</span></label>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <div>
+                                <span class="span_name">車名コード(F7)</span><input type="text" id="syancd" name="syancd" oninput="search();">
+                                <div class="wrapper_match">
+                                    <select id="syancd_match" class="select_match" name="syancd_match" onchange="search(); getMatchChange('syancd_match');">
+                                        <option value="0">前方一致</option>
+                                        <option value="1">後方一致</option>
+                                        <option value="2">部分一致</option>
+                                        <option value="3">完全一致</option>
+                                        <option value="4">含まない</option>
+                                    </select>
+                                </div>
+                                <div class="wrapper_input_question">
+                                    <label><input type="checkbox" id="syancd_question" name="syancd_question"><span>？</span></label>
+                                </div>
                             </div>
                             <div>
-                                <span>ブランド(F10)</span><input type="text" id="brandn" name="brandn" oninput="search();">
+                                <span class="span_name">自税区分(F8)</span><input type="text" id="zeikbn" name="zeikbn" oninput="search();">
+                                <div class="wrapper_match">
+                                    <select id="zeikbn_match" class="select_match" name="zeikbn_match" onchange="search(); getMatchChange('zeikbn_match');">
+                                        <option value="0">前方一致</option>
+                                        <option value="1">後方一致</option>
+                                        <option value="2">部分一致</option>
+                                        <option value="3">完全一致</option>
+                                        <option value="4">含まない</option>
+                                    </select>
+                                </div>
+                                <div class="wrapper_input_question">
+                                    <label><input type="checkbox" id="zeikbn_question" name="zeikbn_question"><span>？</span></label>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <div>
+                                <span class="span_name">備考(F9)</span><input type="text" id="biko" name="biko" oninput="search();">
+                                <div class="wrapper_match">
+                                    <select id="biko_match" class="select_match" name="biko_match" onchange="search(); getMatchChange('biko_match');">
+                                        <option value="0">前方一致</option>
+                                        <option value="1">後方一致</option>
+                                        <option value="2">部分一致</option>
+                                        <option value="3">完全一致</option>
+                                        <option value="4">含まない</option>
+                                    </select>
+                                </div>
+                                <div class="wrapper_input_question">
+                                    <label><input type="checkbox" id="biko_question" name="biko_question"><span>？</span></label>
+                                </div>
+                            </div>
+                            <div>
+                                <span class="span_name">ブランド(F10)</span><input type="text" id="brandn" name="brandn" oninput="search();">
+                                <div class="wrapper_match">
+                                    <select id="brandn_match" class="select_match" name="brandn_match" onchange="search(); getMatchChange('brandn_match');">
+                                        <option value="0">前方一致</option>
+                                        <option value="1">後方一致</option>
+                                        <option value="2">部分一致</option>
+                                        <option value="3">完全一致</option>
+                                        <option value="4">含まない</option>
+                                    </select>
+                                </div>
+                                <div class="wrapper_input_question">
+                                    <label><input type="checkbox" id="brandn_question" name="brandn_question"><span class="span_question">？</span></label>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <div>
+                                <span class="span_name">フリーワード</span><input type="text" id="freeword" name="freeword" oninput="search();">
+                                <div class="wrapper_match">
+                                    <select id="freeword_match" class="select_match" name="freeword_match" onchange="search(); getMatchChange('freeword_match');">
+                                        <option value="0">前方一致</option>
+                                        <option value="1">後方一致</option>
+                                        <option value="2">部分一致</option>
+                                        <option value="3">完全一致</option>
+                                        <option value="4">含まない</option>
+                                    </select>
+                                </div>
+                                <div class="wrapper_input_question">
+                                    <div style="width: 30px;"></div>
+                                </div>
+                            </div>
+                           <div>
+                                <span class="span_name">メモ</span><input type="text" id="memo" name="memo">
                             </div>
                         </div>
                     </div>
                 </form>
             </div>
-
-            <div id="list" name="list">
-
-                <div id="list_header">
-<!--
-                    <div id="header_syancd" data-headername="syancd"><button type="button" onclick="sortList('katas')">車名コード</button></div>
-                    <div id="header_syamei" data-headername="syamei"><button type="button" onclick="sortList('syamei')">車名</button></div>
-                    <div id="header_katas" data-headername="katas"><button type="button" onclick="sortList('katas')">型式</button></div>
-                    <div id="header_cc" data-headername="cc"><button type="button" onclick="sortList('cc')">排気量</button></div>
-                    <div id="header_zeikbn" data-headername="zeikbn"><button type="button" onclick="sortList('zeikbn')">自税</button></div>
-                    <div id="header_grade" data-headername="grade"><button type="button" onclick="sortList('grade')">グレード</button></div>
-                    <div id="header_grades" data-headername="grades"><button type="button" onclick="sortList('grades')">正式グレード</button></div>
-                    <div id="header_syames" data-headername="syames"><button type="button" onclick="sortList('syames')">正式車名</button></div>
-                    <div id="header_brandn" data-headername="brandn"><button type="button" onclick="sortList('brandn')">ブランド</button></div>
-                    <div id="header_syasyu" data-headername="syasyu"><button type="button" onclick="sortList('syasyu')">車種</button></div>
-                    <div id="header_door" data-headername="door"><button type="button" onclick="sortList('door')">ドア</button></div>
-                    <div id="header_biko" data-headername="biko"><button type="button" onclick="sortList('biko')">備考</button></div>
--->
+            <div>
+                <div id="list" name="list">
+                    <div id="list_header">
+                    </div>
+                    <div id="wrapper_list_row">
+                    </div>
                 </div>
-                <div id="wrapper_list_row">
-                </div>
-
+                <div id="wrapper_fontSize" >
+                    <span>文字サイズ</span>
+                    <input type="number" id="fontSize" name="fontSize">
+                    <button onclick="changeFontSize();">変更</button>
+                </div>  
             </div>
+                    
         </div>
         
         <div id="main_right">
@@ -191,72 +313,18 @@
 </html>
 
 <script type="text/javascript">
-    cookie = getCookieArray(document.cookie);
+    let cookie = getCookieArray(document.cookie);
     let list_header_order = cookie["list_header_order"];
     if (!list_header_order) {
         list_header_order = "syancd,syamei,katas,cc,zeikbn,grade,grades,syames,brandn,syasyu,door,biko";
     }
-    
-    function displayListHeader() {
-        array_headername = list_header_order.split(',');
-        let list_header = document.getElementById("list_header");
-        array_header = {
-            syancd:"<div id=\"header_syancd\" data-headername=\"syancd\"><button type=\"button\" onclick=\"sortList('katas')\">車名コード</button></div>",
-            syamei:"<div id=\"header_syamei\" data-headername=\"syamei\"><button type=\"button\" onclick=\"sortList('syamei')\">車名</button></div>",
-            katas:"<div id=\"header_katas\" data-headername=\"katas\"><button type=\"button\" onclick=\"sortList('katas')\">型式</button></div>",
-            cc:"<div id=\"header_cc\" data-headername=\"cc\"><button type=\"button\" onclick=\"sortList('cc')\">排気量</button></div>",
-            zeikbn:"<div id=\"header_zeikbn\" data-headername=\"zeikbn\"><button type=\"button\" onclick=\"sortList('zeikbn')\">自税</button></div>",
-            grade:"<div id=\"header_grade\" data-headername=\"grade\"><button type=\"button\" onclick=\"sortList('grade')\">グレード</button></div>",
-            grades:"<div id=\"header_grades\" data-headername=\"grades\"><button type=\"button\" onclick=\"sortList('grades')\">正式グレード</button></div>",
-            syames:"<div id=\"header_syames\" data-headername=\"syames\"><button type=\"button\" onclick=\"sortList('syames')\">正式車名</button></div>",
-            brandn:"<div id=\"header_brandn\" data-headername=\"brandn\"><button type=\"button\" onclick=\"sortList('brandn')\">ブランド</button></div>",
-            syasyu:"<div id=\"header_syasyu\" data-headername=\"syasyu\"><button type=\"button\" onclick=\"sortList('syasyu')\">車種</button></div>",
-            door:"<div id=\"header_door\" data-headername=\"door\"><button type=\"button\" onclick=\"sortList('door')\">ドア</button></div>",
-            biko:"<div id=\"header_biko\" data-headername=\"biko\"><button type=\"button\" onclick=\"sortList('biko')\">備考</button></div>",
-        }
-        array_headername.forEach( function(val) {
-            element = array_header[val];
-            list_header.insertAdjacentHTML('beforeend', element);
-        }) 
-    }
-
-    function getCookieArray(){
-        var array = new Array();
-        if (document.cookie != ''){
-            var tmp = document.cookie.split('; ');
-            for (var i = 0; i < tmp.length; i++){
-                var data = tmp[i].split('=');
-                array[data[0]] = decodeURIComponent(data[1]);
-            }
-        }
-        return array;
-    }
-
-    function setCookie(name, value) {
-        var days = 365;   //cookieの期限(日)
-        let date = new Date();  //現在の日付データを取得
-        date.setTime(date.getTime() + days*24*60*60*1000);    //30日後の日付データを作成
-        cookie_expire_date = date.toGMTString();    //GMT形式に変換
-
-        document.cookie = name + "=" + value + "; expires=" + cookie_expire_date; 
-        cookie = getCookieArray(document.cookie);
-    }
-
-
-    function setHeaderWidth () {
-        array = ["syancd", "syamei", "katas", "cc", "zeikbn", "grade", "grades", "syames", "brandn", "syasyu", "door", "biko"];
-        array.forEach( function (val) {
-            if (!val) {
-                return;
-            }
-            let element = document.getElementById("header_" + val);
-            element.style.width = cookie[val] + "px";
-        }) 
-    }
-    
 
     //出品番号取得
-    const spno = <?php echo($spno); ?>;
+    //const spno = <?php //echo($spno); ?>;
+    let url = new URL(window.location.href);
+    let params = url.searchParams;
+    const spno = parseInt(params.get('spno'));
+
     //出品番号の表示
     let e_spno = document.getElementById("spno");
     e_spno.innerHTML = spno;
@@ -264,12 +332,6 @@
     p_data_spno.innerHTML = spno;
     //let input_data_spno = document.getElementById("input_data_spno");
     //input_data_spno.value = spno;
-
-    //セッションからkatas_match取得（前方一致・後方一致の設定）
-    let session_katas_match = window.sessionStorage.getItem(['katas_match']);
-    if (session_katas_match == 1) {
-        document.getElementById('katas_match').checked = true;
-    }
 
     //セッションからsortName取得
     let sortName = window.sessionStorage.getItem(['sortName']);
@@ -285,6 +347,14 @@
     let focused_form_id = document.activeElement.id;    //現在（または直前に）フォーカスがあるフォーム
     let focused_button_id = "";     //現在（または直前に）フォーカスがあるリスト内のデータ
 
+    
+    let list_row_fontSize = Number(cookie["fontSize"]);
+    if (!list_row_fontSize) {
+        list_row_fontSize = 18;
+    }
+    let list_row_height = list_row_fontSize + 4;
+    document.getElementById("fontSize").value = list_row_fontSize;
+
     displayListHeader();
     setHeaderWidth();
     displaySpnhyou();
@@ -292,7 +362,73 @@
     //register();
     keyboard();
     focusInputs();
-    onclickBody();
+    focusForm();
+    headerWidthChange()
+    setMatch();
+
+       
+    function displayListHeader() {
+        let array_headername = list_header_order.split(',');
+        let list_header = document.getElementById("list_header");
+        list_header.innerHTML = "";
+        //list_header.style.height = list_row_height + "px";
+        //list_header.style.lineHeight = list_row_height + "px";
+        let style = "style='font-size: " + list_row_fontSize + "px; height: " + list_row_height + "px; line-height: " + list_row_height + "px;'"
+        style = "style='font-size: " + list_row_fontSize + "px;'";
+        //style = "style=''";
+        array_header = {
+            syancd: "<div id=\"header_syancd\" data-headername=\"syancd\"><button " + style + " type=\"button\" onclick=\"sortList('katas')\">車名コード</button></div>",
+            syamei: "<div id=\"header_syamei\" data-headername=\"syamei\"><button " + style + " type=\"button\" onclick=\"sortList('syamei')\">車名</button></div>",
+            katas: "<div id=\"header_katas\" data-headername=\"katas\"><button " + style + " type=\"button\" onclick=\"sortList('katas')\">型式</button></div>",
+            cc: "<div id=\"header_cc\" data-headername=\"cc\"><button " + style + " type=\"button\" onclick=\"sortList('cc')\">排気量</button></div>",
+            zeikbn: "<div id=\"header_zeikbn\" data-headername=\"zeikbn\"><button " + style + " type=\"button\" onclick=\"sortList('zeikbn')\">自税</button></div>",
+            grade: "<div id=\"header_grade\" data-headername=\"grade\"><button " + style + " type=\"button\" onclick=\"sortList('grade')\">グレード</button></div>",
+            grades: "<div id=\"header_grades\" data-headername=\"grades\"><button " + style + " type=\"button\" onclick=\"sortList('grades')\">正式グレード</button></div>",
+            syames: "<div id=\"header_syames\" data-headername=\"syames\"><button " + style + " type=\"button\" onclick=\"sortList('syames')\">正式車名</button></div>",
+            brandn: "<div id=\"header_brandn\" data-headername=\"brandn\"><button " + style + " type=\"button\" onclick=\"sortList('brandn')\">ブランド</button></div>",
+            syasyu: "<div id=\"header_syasyu\" data-headername=\"syasyu\"><button " + style + " type=\"button\" onclick=\"sortList('syasyu')\">車種</button></div>",
+            door: "<div id=\"header_door\" data-headername=\"door\"><button " + style + " type=\"button\" onclick=\"sortList('door')\">ドア</button></div>",
+            biko: "<div id=\"header_biko\" data-headername=\"biko\"><button " + style + " type=\"button\" onclick=\"sortList('biko')\">備考</button></div>",
+        }
+        array_headername.forEach( function(val) {
+            let element = array_header[val];
+            list_header.insertAdjacentHTML('beforeend', element);
+        }) 
+    }
+
+    function getCookieArray(){
+        let array = new Array();
+        if (document.cookie != ''){
+            let tmp = document.cookie.split('; ');
+            for (let i = 0; i < tmp.length; i++){
+                let data = tmp[i].split('=');
+                array[data[0]] = decodeURIComponent(data[1]);
+            }
+        }
+        return array;
+    }
+
+    function setCookie(name, value) {
+        let days = 365;   //cookieの期限(日)
+        let date = new Date();  //現在の日付データを取得
+        date.setTime(date.getTime() + days*24*60*60*1000);    //30日後の日付データを作成
+        let cookie_expire_date = date.toGMTString();    //GMT形式に変換
+
+        document.cookie = name + "=" + value + "; expires=" + cookie_expire_date; 
+        cookie = getCookieArray(document.cookie); //配列cookieを更新
+    }
+
+
+    function setHeaderWidth () {
+        let array = ["syancd", "syamei", "katas", "cc", "zeikbn", "grade", "grades", "syames", "brandn", "syasyu", "door", "biko"];
+        array.forEach( function (val) {
+            if (!val) {
+                return;
+            }
+            let element = document.getElementById("header_" + val);
+            element.style.width = cookie[val] + "px";
+        })
+    }
 
     //出品票表示
     function displaySpnhyou() {
@@ -341,7 +477,6 @@
         xhr.send("spno=" + spno);
     }
     
-
     //検索の処理
     function search() {
         let form = document.getElementById('form_search');
@@ -353,24 +488,10 @@
         let grades = replaceAlphabetHtoF(formData.get("grades"));
         formData.set("grades", grades);
 
-        let katas_match = document.getElementById('katas_match');
-        if (katas_match.checked == true) {
-            formData.set("katas_match", 1);
-            window.sessionStorage.setItem(['katas_match'],[1]);
-            
-        }
-        else {
-            formData.set("katas_match", 0);
-            window.sessionStorage.setItem(['katas_match'],[0]);
-        }
-
         formData.set("sortName", sortName);
         window.sessionStorage.setItem(['sortName'],[sortName]);
         formData.set("sortDirection", sortDirection);
         window.sessionStorage.setItem(['sortDirection'],[sortDirection]);
-
-        //katas_match = formData.get("katas_match");
-        //console.log(formData);
 
         let xhr = new XMLHttpRequest();
         xhr.open('POST', './ajax/search.php');
@@ -383,7 +504,7 @@
             }
             else if (xhr.readyState == 4 && xhr.status == 200) {
                 let responce = xhr.response;
-                //console.log(responce);
+                console.log(responce);
                 if (responce == -1) {
                     let array = [];
                     displayList(array);
@@ -425,15 +546,12 @@
         //xhr.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
         xhr.send();
     };
+
     function setCount(count) {
         let count_registered = document.getElementById("count_registered");
         count_registered.innerHTML = count;
     }
-
-    //getCount();
-
-
-    
+   
     //リストを表示
     function displayList(array) {
         let wrapper_list_row = document.getElementById("wrapper_list_row");
@@ -443,16 +561,15 @@
         array.forEach( function (val, index) {
             let id = "id_" + i;
             if (list_header_order) {
-                array = list_header_order.split(',');
+                array_lho = list_header_order.split(',');
             }
             else {
-                array = ["syancd", "syamei", "katas", "cc", "zeikbn", "grade", "grades", "syames", "brandn", "syasyu", "door", "biko"];
+                array_lho = ["syancd", "syamei", "katas", "cc", "zeikbn", "grade", "grades", "syames", "brandn", "syasyu", "door", "biko"];
             }
             let row_add = "";
-            array.forEach( function (name) {
+            array_lho.forEach( function (name) {
                 let data = val[name].trim();
                 let width = cookie[name];
-
                 //console.log(name + ":" + data + " : " + width);
                 if (width) {
                     row_add += "<div class='" + name + "' style='width: " + width + "px;'>" + data + "</div>";
@@ -465,51 +582,19 @@
             let katas = val["katas"].trim();
             let cc = val["cc"].trim();
             let syamei = val["syamei"].trim();
+            let style = "";
             if (syamei.indexOf("4W") > 0) {
-                bgColor = "style='color: #1c00ff;' ";
+                style = "style='color: #1c00ff; line-height: " + list_row_height + "px; height: " + list_row_height + "px; font-size: " + list_row_fontSize + "px;'"
             }
             else {
-                bgColor = "";
+                style = "style='line-height: " + list_row_height + "px; height: " + list_row_height + "px; font-size: " + list_row_fontSize + "px;'"
             }
 
             let grades = val["grades"].trim();
             let door = val["door"].trim();
-            let row = "<button " + bgColor + "class='list_row' id='" + id + "' onclick='setData(\"" + syancd + "\", \"" + katas + "\", \"" + cc + "\", \""  + syamei + "\", \"" + grades +  "\", \"" + door + "\")'>";
+            let row = "<button " + style + "class='list_row' id='" + id + "' onclick='setData(\"" + syancd + "\", \"" + katas + "\", \"" + cc + "\", \""  + syamei + "\", \"" + grades +  "\", \"" + door + "\")'>";
             row += row_add;
             row += "</button>";
-
-/*
-            let syancd = val["syancd"].trim();
-            let syamei = val["syamei"].trim();
-            let grade = val["grade"].trim();
-            let katas = val["katas"].trim();
-            let cc = val["cc"].trim();
-            let zeikbn = val["zeikbn"].trim();
-            let lstpg = val["lstpg"].trim();
-            let lstymd = val["lstymd"].trim();
-            let sortno = val["sortno"].trim();
-            let brandn = val["brandn"].trim();
-            let syames = val["syames"].trim();
-            let door = val["door"].trim();
-            let syasyu = val["syasyu"].trim();
-            let grades = val["grades"].trim();
-            let biko = val["biko"].trim();
-            let id = "id_" + i;
-           
-            row += "<div class='syancd'>" + syancd + "</div>";
-            row += "<div class='syamei'>" + syamei + "</div>";
-            row += "<div class='katas' style='width:;'>" + katas + "</div>";
-            row += "<div class='cc'>" + cc + "</div>";
-            row += "<div class='zeikbn'>" + zeikbn + "</div>";
-            row += "<div class='grade'>" + grade + "</div>";
-            row += "<div class='grades'>" + grades + "</div>";
-            row += "<div class='syames'>" + syames + "</div>";
-            row += "<div class='brandn'>" + brandn + "</div>";
-            row += "<div class='syasyu'>" + syasyu + "</div>";
-            row += "<div class='door'>" + door + "</div>";
-            row += "<div class='biko'>" + biko + "</div>";
-            row += "</button>";
-*/
             wrapper_list_row.insertAdjacentHTML('beforeend', row);
             i++;
         });
@@ -527,6 +612,7 @@
             focusById(focused_form_id);
             return;
         }
+        console.log(spno);
         jumpToNextSpno(spno);
         return;
 
@@ -592,7 +678,7 @@
     function changeButtonColor(id) {
         clearButtonColor();
         let button = document.getElementById(id);
-        button.style.backgroundColor = "#ffb0b0";
+        button.style.backgroundColor = "#ffdada";
     }
 
     //リスト内のデータの色を元に戻す
@@ -600,14 +686,14 @@
         let wrapper_list_row = document.getElementById("wrapper_list_row");
         let button = wrapper_list_row.children;
         for (let i = 0; i < button.length; i++){
-			button[i].style.backgroundColor = "#ffe0f0";
+			button[i].style.backgroundColor = "#ffeeee";
 		}
     }
     
     //文字列の表示幅を取得
     function getStrWidth(str) {
         // spanを生成.
-        var span = document.createElement('span');
+        let span = document.createElement('span');
 
         // 現在の表示要素に影響しないように、画面外に飛ばしておく.
         span.style.position = 'absolute';
@@ -628,7 +714,7 @@
         document.body.appendChild(span);
 
         // 横幅を取得します.
-        var width = span.clientWidth;
+        let width = span.clientWidth;
         //console.log('width:', width)
 
         // 終わったらDOMから削除します.
@@ -693,6 +779,7 @@
         else {
             next_spno = array[i + 1];
         }
+
         window.location.href = "./search.php?spno=" + next_spno;
     }
 
@@ -786,7 +873,7 @@
     }
     
 
-    //↑ボタンが押されたとき
+    //[↑]ボタンが押されたとき
     function clickUp() {
         if (focused_button_id == "") {
             let id_1 = document.getElementById("id_1");
@@ -808,7 +895,7 @@
         }
     }
 
-    //↓ボタンが押されたとき
+    //[↓]ボタンが押されたとき
     function clickDown() {
         if (focused_button_id == "") {
             let id_1 = document.getElementById("id_1");
@@ -848,24 +935,15 @@
         document.getElementById(id).focus();
     }
 
-    //何もない場所をクリックするなどでフォーカスが外れた時に戻す
-    function onclickBody() {
+    //何もない場所をクリックするなどでフォーカスが外れた時にフォームに戻す
+    function focusForm() {
         window.addEventListener("click", function() {
             let tagName = document.activeElement.tagName;
             if (tagName == "BODY") {
                 focusById(focused_form_id);
             }
-            else if (tagName == "INPUT") {
-                let id = document.activeElement.id;
-                if (id == "question") {
-                    focusById(focused_form_id);
-                    return;
-                }
-                focused_form_id = id;
-            }
         }); 
     }
-    
 
     //input要素がフォーカスされたときの処理
     function focusInputs() {
@@ -882,39 +960,40 @@
         });
     }
     
-    let list_header = document.getElementById('list_header');
-    let elements = list_header.children;
-    for (let i = 0; i < elements.length; i++){
-        element = elements[i];
-        getWidthChange(element);
+    //リストのヘッダーの幅の変更を取得
+    function headerWidthChange() {
+        let list_header = document.getElementById('list_header');
+        let elements = list_header.children;
+        for (let i = 0; i < elements.length; i++){
+            let element = elements[i];
+            getWidthChange(element);
+        }
     }
 
     function getWidthChange(element) {
-        document.addEventListener('DOMContentLoaded', () => {
-            //要素のリサイズイベント取得
-            let observer = new MutationObserver(() => {
-                //要素のサイズ確認
-                let width = element.getBoundingClientRect().width;
-                let height = element.getBoundingClientRect().height;
-                //console.log('size(w,h): ', width, height);
-                className = element.dataset.headername;
-                changeWidth(className, width);
-            })
-            observer.observe(element, {
-                attriblutes: true,
-                attributeFilter: ["style"]
-            })
+        //要素のリサイズイベント取得
+        let observer = new MutationObserver(() => {
+            //要素のサイズ確認
+            let width = element.getBoundingClientRect().width;
+            let height = element.getBoundingClientRect().height;
+            //console.log('size(w,h): ', width, height);
+            let className = element.dataset.headername;
+            changeWidth(className, width);
         })
+        observer.observe(element, {
+            attriblutes: true,
+            attributeFilter: ["style"]
+        })
+
     }
 
     function changeWidth(className, width) {
-        elements = document.getElementsByClassName(className);
+        let elements = document.getElementsByClassName(className);
         for (let i = 0; i < elements.length; i++){
             elements[i].style.width = width + "px";
         }
         setCookie(className, width);
     }
-
 
     new Sortable(list_header,{
         animation: 300,
@@ -932,16 +1011,49 @@
         let headers = document.querySelectorAll('#list_header div');
         list_header_order = "";
         for(let i = 0; i < headers.length; i++) {
-            headername = headers[i].dataset.headername;
+            let headername = headers[i].dataset.headername;
             list_header_order = list_header_order + headername;
             if (i != headers.length - 1) {
                 list_header_order = list_header_order + ",";
             }
         }
         setCookie("list_header_order", list_header_order);
-        console.log(list_header_order);
     }
 
+    //検索の一致条件を設定
+    function setMatch () {
+        let array = ["katas", "cc", "syamei", "syames", "syames", "grade", "grades", "syancd", "zeikbn", "biko", "brandn", "freeword"];
+        array.forEach(function(val) {
+            let id = val + "_match";
+            let match = cookie[id];
+            if (!match) {   //クッキーがセットされていなければ（デフォルト）
+                //match = 0;
+                return;
+            }
+            let element = document.getElementById(id);
+            element.value = match;
+        })
+    }
+    //検索の一致条件の変更を取得（してcookieをセット）
+    function getMatchChange(id) {
+        let element = document.getElementById(id);
+        let match = element.value;
+        console.log(id + " :: " + match);
+        setCookie(id, match);
+        focusById(focused_form_id); //フォーカスをフォームに戻す
+    }
+
+    function changeFontSize() {
+        let fontSize = document.getElementById("fontSize").value;
+        fontSize = Number(fontSize);
+        list_row_height = fontSize + 2;
+        list_row_fontSize =  fontSize;
+        setCookie("fontSize", fontSize);
+        displayListHeader();
+        setHeaderWidth();
+        headerWidthChange();
+        search();
+    }
 </script>
 
 <style>
@@ -1114,6 +1226,7 @@
     #form_search {
         margin: 20px 15px;
     }
+/*
     #form_search div span {
         display: inline-block;
         text-align: left;
@@ -1121,63 +1234,53 @@
         width: 140px;
         height: 30px;
     }
-    #wrapper_inputs_top {
+*/   
+    .wrapper_match {
+        display: flex;
+        align-items: center;
+        margin: 0 5px;
+    }
+
+    #wrapper_inputs {
+        display: flex;
+        flex-direction: column;
+    }
+    #wrapper_inputs > div {
         display: flex;
         flex-direction: row;
         align-items: center;
     }
-    #wrapper_input_katas {
-        margin: 10px 15px;
-    }
-    #wrapper_input_katas input {
-        font-size: 20px;
-        width: 250px;
-        height: 30px;
-        background-color: #c7efff;
-    }
-    
-    #wrapper_katas_match {
-        display: flex;
-        align-items: center;
-    }
-
-    #wrapper_inputs_bottom {
+    #wrapper_inputs > div > div {
         display: flex;
         flex-direction: row;
-
+        align-items: center;
+        margin: 3px 25px;
     }
-    #wrapper_inputs_bottom div div {
-        margin: 5px 15px;
-    }
-    #wrapper_inputs_bottom div div span {
+    .span_name {
         display: inline-block;
         text-align: left;
         font-size: 16px;
         width: 140px;
         height: 26px;
     }
-    #wrapper_inputs_bottom div div input {
+    #wrapper_inputs > div > div > input {
         font-size: 16px;
         width: 250px;
         height: 26px;
     }
-    #wrapper_input_question {
+    .wrapper_input_question {
         display: flex;
         flex-direction: row;
+        margin: 0 5px;
         height: 30px;
-        margin-left: 361px;
         line-height: 30px;
         vertical-align: middle;
     }
-    #wrapper_input_question span {
+    .wrapper_input_question span {
         font-size: 18px;
         width: 140px;
     }
-    #question {
-        margin: auto;
-        width: 30px;
-        height: 30px;
-    }
+
 
     #list {
         position: relative;
@@ -1193,7 +1296,7 @@
         line-height: 20px;
         font-size: 15px;
         color: black;
-        background-color: #ffe0f0;
+        background-color: #ffeeee;
         display: flex;
         flex-direction: row;
         border: none;
@@ -1312,10 +1415,8 @@
     }
 
     #list_header {
-        height: 25px;
-        line-height: 25px;
         color: black;
-        background-color: #f0f0f0;
+        background-color: #f4f4f4;
         display: inline-flex;
         flex-direction: row;
         border: none;
@@ -1374,57 +1475,41 @@
         border: 6px inset #70f070;
     }
 
-
-
-
-    #katas_match {
-        display: none;
-    }
-
-    #katas_match + label.check {
-        position: relative;
-        cursor: pointer;
-        display: inline-block;
+    .select_match {
         width: 80px;
-        height: 28px;
-        color: #ffffff;
-        border: 1px solid #4db4e4;
-        border-radius: 3px;
-        background-color: #4db4e4;
-    }
-    #katas_match:checked + label.check {
-        border: 1px solid #ff7bf7;
-        background-color: #ff7bf7;
-    }
-    #katas_match + label.check::before {
-        content: "前方一致";
-        font-size: 14px;
-        position: absolute;
-        top: 4px;
-        left: auto;
-        right: 6px;
-    }
-    #katas_match:checked + label.check::before {
-        content: "完全一致";
-        position: absolute;
-        left: 6px;
-        right: auto;
-        color: #ffffff;
-    }
-    #katas_match + label.check > div {
-        position: absolute;
-        top: 2px;
-        left: 2px;
-        width: 12px;
-        height: 22px;
-        border: 1px solid #ffffff;
-        border-radius: 3px;
-        background-color: #ffffff;
-        transition: 0.2s;
-    }
-    #katas_match:checked + label.check > div {
-        border: 1px solid transparent;
-        left: 64px;
+        height: 30px;
     }
 
+    .wrapper_input_question label input {
+       display: none;
+    }
+    .wrapper_input_question label span {
+        text-align: center;
+        width: 30px;
+        height: 30px;
+        color: white;
+        background-color: #cccccc;
+        font-size: 24px; 
+        border: none;
+        border-radius: 10px;
+        display: inline-block;
+    }
+    .wrapper_input_question input:checked + span {
+        color: white; 
+        background-color: #ff0000;
+    }
+    #wrapper_fontSize {
+        margin-left: 60px;
+    }
+    #fontSize {
+        width: 35px;
+        height: 20px;
+        font-size: 16px;
+    }
+    #wrapper_fontSize button {
+        color: white;
+        background-color: #898989;
+        border: none;
+        border-radius: 3px;
+    }
 </style>

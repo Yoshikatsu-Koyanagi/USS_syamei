@@ -8,6 +8,10 @@
         exit;
     }
 
+    $katas_match = $_POST["katas_match"];
+    $sortName = $_POST["sortName"];
+    $sortDirection = $_POST["sortDirection"];
+
     $array = array(
         "katas" => [trim($_POST["katas"]), $_POST["katas_match"]],
         "cc" => [trim($_POST["cc"]), $_POST["cc_match"]],
@@ -19,41 +23,75 @@
         "zeikbn" => [trim($_POST["zeikbn"]), $_POST["zeikbn_match"]],
         "biko" => [trim($_POST["biko"]), $_POST["biko_match"]],
         "brandn" => [trim(str_replace("　", "", $_POST["brandn"])), $_POST["brandn_match"]],
+        //"freeword" => [trim(str_replace("　", "", $_POST["freeword"])), $_POST["freeword_match"]],
     );
+    $freeword = trim(str_replace("　", "", $_POST["freeword"]));
     foreach ($array as $key => $val) {
         if ($val[0] !== "") {   //空でないものがあればループを抜ける
             break;
         }
-        if ($key == array_key_last($array)) {       //最後まで空だったら-1を返して終了
+        if ($key == array_key_last($array) && $freeword == "") {       //最後まで空だったら-1を返して終了
             echo(-1);
             exit;
         }
     }
     $and = "";
     $SQL = "SELECT * FROM syamei_master ";
+    $SQL .= "WHERE ";
     foreach ($array as $key => $val) {
-        if ($val[0] !== "") {
-            if ($val[1] == 0) {
-                $SQL .= $and."trim({$key}) ILIKE '{$val}%' ";
+        $input = $val[0];
+        $match = $val[1];
+        if ($input !== "") {
+            if ($match == 0) {     //前方一致
+                $SQL .= $and."trim({$key}) ILIKE '{$input}%' ";
             }
-            else if ($val[1] == 1) {
-                $SQL .= $and."trim({$key}) ILIKE '%{$val}' ";
+            else if ($match == 1) {     //後方一致
+                $SQL .= $and."trim(replace({$key}, '　', ' ')) ILIKE '%{$input}' ";
             }
-            else if ($val[1] == 2) {
-                $SQL .= $and."trim({$key}) ILIKE '%{$val}%' ";
+            else if ($match == 2) {     //部分一致
+                $SQL .= $and."trim({$key}) ILIKE '%{$input}%' ";
             }
-            else if ($val[1] == 3) {
-                $SQL .= $and."LOWER(trim({$key})) = LOWER('{$val}') ";
+            else if ($match == 3) {     //完全一致
+                $SQL .= $and."LOWER(trim({$key})) = LOWER('{$input}') ";
             }
-            else if ($val[1] == 4) {
-                $and."trim({$key}) NOT ILIKE '%{$val}%' ";
+            else if ($match == 4) {     //含まない
+                $SQL .= $and."trim({$key}) NOT ILIKE '%{$input}%' ";
             }
+            $and = "AND ";
         }
         else {
             continue;
         }
     }
-
+    $or = "";
+    if (trim(str_replace("　", "", $_POST["freeword"])) !== "") {
+        $input = trim(str_replace("　", "", $_POST["freeword"]));
+        $match = $_POST["freeword_match"];
+        $SQL .= $and."( ";
+        $and = "";
+        foreach ($array as $key => $val) {
+            if ($match == 0) {     //前方一致
+                $SQL .= $or."trim({$key}) ILIKE '{$input}%' ";
+            }
+            else if ($match == 1) {     //後方一致
+                $SQL .= $or."trim(replace({$key}, '　', ' ')) ILIKE '%{$input}' ";
+            }
+            else if ($match == 2) {     //部分一致
+                $SQL .= $or."trim({$key}) ILIKE '%{$input}%' ";
+            }
+            else if ($match == 3) {     //完全一致
+                $SQL .= $or."LOWER(trim({$key})) = LOWER('{$input}') ";
+            }
+            else if ($match == 4) {     //含まない
+                $SQL .= $and."trim({$key}) NOT ILIKE '%{$input}%' ";
+                $and = "AND ";
+            }
+            $or = "OR ";
+            $and = "AND ";
+        }
+        $SQL .= ") ";
+    }
+/*
     $katas = trim($_POST["katas"]);
     $cc = trim($_POST["cc"]);
     $syamei = trim($_POST["syamei"]);
@@ -80,12 +118,21 @@
     $SQL = "SELECT * FROM syamei_master ";
     $SQL .= "WHERE ";
     if ($katas != '') {
-        if ($katas_match == 1) {
+        if ($katas_match == 0) {
+            $SQL .= "trim(katas) ILIKE '{$katas}%' ";
+        }
+        else if ($katas_match == 1) {
+            $SQL .= "trim(katas) ILIKE '%{$katas}' ";
+        }
+        else if ($katas_match == 2) {
+            $SQL .= "trim(katas) ILIKE '%{$katas}%' ";
+        }
+        else if ($katas_match == 3) {
             $SQL .= "lower(trim(katas)) = LOWER('{$katas}') ";
         }
-        else {
-            $SQL .= "trim(katas) ILIKE '{$katas}%' ";
-        }   
+        else if ($katas_match == 4) {
+            $SQL .= "trim(katas) NOT ILIKE '%{$katas}%' ";
+        }  
         $and = "AND ";
     }
     if ($cc != '') {
@@ -125,19 +172,9 @@
         $SQL .= $and."trim(brandn) ILIKE '{$brandn}%' ";
         //$and = "AND ";
     }
-/*
-    if ($syasyu != '') {
-        $SQL .= $and."trim(syasyu) ILIKE '{$syasyu}%' ";
-        $and = "AND ";
-    }
-    if ($door != '') {
-        $SQL .= $and."trim(door) ILIKE '{$door}%' ";
-        //$and = "AND ";
-    }
 */
     $SQL .= "ORDER BY {$sortName} {$sortDirection} ";
     $SQL .= "LIMIT 300";
-
 
     $res = pg_query($con, $SQL);
     if (!$res) {
